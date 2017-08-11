@@ -15,15 +15,15 @@ trait WomDotGraphTest extends FlatSpec with Matchers {
       it should s"draw the right DOT graph for ${testCase.name}" in {
         val womGraph = new WomGraph(testCase.name, testCase.graph)
 
-        val standardResult = standardiseResult(womGraph.digraphDot)
-        val standardExpectation = standardiseResult(testCase.dotExpectation)
+        val standardResult = standardizifyResult(womGraph.digraphDot)
+        val standardExpectation = standardizifyResult(testCase.dotExpectation)
 
         standardResult should be(standardExpectation)
       }
     }
   }
-
-  def standardiseResult(dot: String) = {
+  
+  def standardizifyResult(dot: String) = {
     val regex = "(NODE|PORT)-?[0-9]*".r
     val matches = regex.findAllIn(dot).toList.distinct.map(_.toString)
     val currentMatchId = new AtomicInteger(0)
